@@ -99,4 +99,3 @@ Splash screen is done
         return false;
     }
 }
-x
