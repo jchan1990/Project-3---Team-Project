@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qube.jjspost.ArticleDetailActivity;
+import com.example.qube.jjspost.activities.ArticleDetailActivity;
 import com.example.qube.jjspost.R;
 import com.example.qube.jjspost.models.search_result.SearchResult;
 import com.squareup.picasso.Picasso;

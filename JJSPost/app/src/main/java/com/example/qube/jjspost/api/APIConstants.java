@@ -1,4 +1,4 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.api;
 
 /**
  * Created by roosevelt on 8/15/16.

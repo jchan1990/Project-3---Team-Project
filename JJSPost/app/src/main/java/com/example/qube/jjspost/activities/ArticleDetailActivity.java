@@ -1,4 +1,4 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import com.example.qube.jjspost.R;
 
 public class ArticleDetailActivity extends AppCompatActivity {
     private ShareActionProvider mShareActionProvider;

@@ -1,4 +1,4 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.Toast;
 
+import com.example.qube.jjspost.R;
+import com.example.qube.jjspost.api.APIConstants;
+import com.example.qube.jjspost.api.NYTAPIService;
 import com.example.qube.jjspost.models.search_result.SearchResult;
 import com.example.qube.jjspost.recycler.SearchResultRecyclerViewAdapter;
 

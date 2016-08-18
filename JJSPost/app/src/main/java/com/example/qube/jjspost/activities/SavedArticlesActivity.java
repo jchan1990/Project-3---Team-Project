@@ -1,7 +1,9 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.qube.jjspost.R;
 
 public class SavedArticlesActivity extends AppCompatActivity {
 

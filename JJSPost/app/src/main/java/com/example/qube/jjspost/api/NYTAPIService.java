@@ -1,5 +1,6 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.api;
 
+import com.example.qube.jjspost.api.APIConstants;
 import com.example.qube.jjspost.models.Articles;
 import com.example.qube.jjspost.models.search_result.SearchResult;
 

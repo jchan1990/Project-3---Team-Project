@@ -1,4 +1,4 @@
-package com.example.qube.jjspost.main;
+package com.example.qube.jjspost.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -19,11 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.qube.jjspost.ArticlesHome;
-import com.example.qube.jjspost.BookmarksActivity;
+import com.example.qube.jjspost.fragments.ArticlesHome;
 import com.example.qube.jjspost.R;
-import com.example.qube.jjspost.SavedArticlesActivity;
-import com.example.qube.jjspost.SearchActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {

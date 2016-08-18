@@ -1,4 +1,4 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qube.jjspost.api.APIConstants;
+import com.example.qube.jjspost.api.NYTAPIService;
+import com.example.qube.jjspost.R;
 import com.example.qube.jjspost.models.Articles;
 import com.example.qube.jjspost.recycler.ArticleRecyclerViewAdapter;
 

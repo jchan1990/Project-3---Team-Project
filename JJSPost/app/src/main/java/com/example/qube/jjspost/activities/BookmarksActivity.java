@@ -1,4 +1,4 @@
-package com.example.qube.jjspost;
+package com.example.qube.jjspost.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.example.qube.jjspost.R;
 
 public class BookmarksActivity extends AppCompatActivity {
 

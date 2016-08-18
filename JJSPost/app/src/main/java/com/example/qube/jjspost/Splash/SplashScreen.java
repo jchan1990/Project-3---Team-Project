@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.qube.jjspost.main.MainActivity;
+import com.example.qube.jjspost.activities.MainActivity;
 import com.example.qube.jjspost.R;
 
 /**
