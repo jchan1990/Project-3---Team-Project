@@ -16,6 +16,7 @@
         android:textSize="21sp" />
 
     <android.support.v7.widget.RecyclerView
+        android:paddingTop="5dp"
         android:id="@+id/articleRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
