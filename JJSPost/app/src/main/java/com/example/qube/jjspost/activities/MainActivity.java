@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.example.qube.jjspost.fragments.ArticlesHome;
 import com.example.qube.jjspost.R;
+import com.facebook.FacebookSdk;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {
@@ -32,6 +33,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         //Load fragment with data
 //        Fragment fragment = ArticlesHome.newInstance("home");
@@ -115,6 +118,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_saved:
                 intent = new Intent(this, SavedArticlesActivity.class);
                 break;
+            case R.id.nav_login:
+                intent = new Intent(this, LoginActivity.class);
             case R.id.nav_section_all:
                 pager.setCurrentItem(0, true);
                 break;

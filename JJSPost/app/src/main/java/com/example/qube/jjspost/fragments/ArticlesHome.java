@@ -18,9 +18,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.qube.jjspost.R;
 import com.example.qube.jjspost.api.APIConstants;
 import com.example.qube.jjspost.api.NYTAPIService;
-import com.example.qube.jjspost.R;
 import com.example.qube.jjspost.models.Articles;
 import com.example.qube.jjspost.recycler.ArticleRecyclerViewAdapter;
 
@@ -79,8 +79,7 @@ public class ArticlesHome extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
-
-        getStories(mParam1);
+//        getStories(mParam1);
 
     }
 
@@ -123,6 +122,7 @@ public class ArticlesHome extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        getStories(mParam1);
 //        mRecyclerView = (RecyclerView) getView().findViewById(R.id.articleRecyclerView);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
 //                LinearLayoutManager.VERTICAL, false);
@@ -179,6 +179,7 @@ public class ArticlesHome extends Fragment {
 
             //get an instance of GitHubService
             NYTAPIService service = retrofit.create(NYTAPIService.class);
+//            NYTAPIService service = ServiceGenerator.createService(NYTAPIService.class);
 
             //Get a Call of type User with the service and getUser method
             Call<Articles> storiesCall = service.getTopStories(section);
@@ -204,9 +205,7 @@ public class ArticlesHome extends Fragment {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 }
-
                 @Override
                 public void onFailure(Call<Articles> call, Throwable t) {
 
