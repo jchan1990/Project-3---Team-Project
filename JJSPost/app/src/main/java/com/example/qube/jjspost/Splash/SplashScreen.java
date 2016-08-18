@@ -1,10 +1,10 @@
-package com.example.qube.jjspost.Splash;
+package com.example.qube.jjspost.splash;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.qube.jjspost.Main.MainActivity;
+import com.example.qube.jjspost.main.MainActivity;
 import com.example.qube.jjspost.R;
 
 /**
