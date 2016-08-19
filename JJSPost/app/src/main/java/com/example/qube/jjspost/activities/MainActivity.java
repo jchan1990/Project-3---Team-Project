@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
                 new ComponentName(getPackageName(),
                         APICallJobService.class.getName()))
                 .setExtras(bundle)
-                .setPeriodic(900_000)
+                .setPeriodic(3_600_000)
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
