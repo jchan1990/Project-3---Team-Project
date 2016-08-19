@@ -41,12 +41,12 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Articl
         String imgURL = "";
 
         //get image url (
-        if (article.getMultimedia().size() > 3){
-            imgURL = article.getMultimedia().get(0).getUrl();
+        if (article.getMultimedia().size() > 0) {
+            imgURL = "https://static01.nyt.com/" + article.getMultimedia().get(0).getUrl();
         }
 
         //set image
-        if(!imgURL.equals("")){
+        if (!imgURL.equals("")) {
             Picasso.with(holder.itemView.getContext())
                     .load(imgURL)
                     .into(holder.getImgView());

@@ -41,11 +41,16 @@ public class ArticlesHomeTest {
 
     @Test
     public void testIfNavDrawerWorks() throws Exception {
-        onView(withId(R.id.drawer_layout)).perform(swipeUp());
         onView(withId(R.id.drawer_layout)).perform(swipeDown());
         onView(withId(R.id.drawer_layout)).perform(swipeUp());
+        onView(withId(R.id.drawer_layout)).perform(swipeLeft());
         onView(withId(R.id.drawer_layout)).perform(swipeDown());
         onView(withId(R.id.drawer_layout)).perform(swipeUp());
+        onView(withId(R.id.drawer_layout)).perform(swipeLeft());
+        onView(withId(R.id.drawer_layout)).perform(swipeDown());
+        onView(withId(R.id.drawer_layout)).perform(swipeUp());
+
+        onView(withId(R.id.drawer_layout)).perform(swipeLeft());
     }
 
     @Test

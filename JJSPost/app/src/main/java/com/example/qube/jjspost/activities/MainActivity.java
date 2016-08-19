@@ -5,6 +5,8 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,12 +26,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.example.qube.jjspost.api.UserData;
 import com.example.qube.jjspost.fragments.ArticlesHome;
 import com.example.qube.jjspost.R;
 import com.example.qube.jjspost.services.APICallJobService;
 import com.facebook.FacebookSdk;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {
@@ -58,11 +65,26 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            final MediaPlayer mp = new MediaPlayer();
             @Override
             public void onClick(View view) {
                 String q = UserData.getInstance().getSubscriptionsAsString();
-                Snackbar.make(view, q, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                if (mp.isPlaying()) {
+                    mp.stop();
+                }
+                try {
+                    mp.reset();
+                    AssetFileDescriptor afd;
+                    afd = getAssets().openFd("WeWillRockYou.mp3");
+                    mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                    mp.prepare();
+                    mp.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
