@@ -356,27 +356,27 @@ public class BreakingNews {
         @SerializedName("published_date")
         @Expose
         private String publishedDate;
-        @SerializedName("material_type_facet")
-        @Expose
-        private String materialTypeFacet;
+//        @SerializedName("material_type_facet")
+//        @Expose
+//        private String materialTypeFacet;
         @SerializedName("kicker")
         @Expose
         private String kicker;
         @SerializedName("headline")
         @Expose
         private String headline;
-        @SerializedName("des_facet")
-        @Expose
-        private List<String> desFacet = new ArrayList<String>();
-        @SerializedName("org_facet")
-        @Expose
-        private String orgFacet;
-        @SerializedName("per_facet")
-        @Expose
-        private List<String> perFacet = new ArrayList<String>();
-        @SerializedName("geo_facet")
-        @Expose
-        private List<String> geoFacet = new ArrayList<String>();
+//        @SerializedName("des_facet")
+//        @Expose
+//        private List<String> desFacet = new ArrayList<String>();
+//        @SerializedName("org_facet")
+//        @Expose
+//        private String orgFacet;
+////        @SerializedName("per_facet")
+////        @Expose
+////        private List<String> perFacet = new ArrayList<String>();
+//        @SerializedName("geo_facet")
+//        @Expose
+//        private List<String> geoFacet = new ArrayList<String>();
         @SerializedName("blog_name")
         @Expose
         private String blogName;
@@ -621,23 +621,23 @@ public class BreakingNews {
             this.publishedDate = publishedDate;
         }
 
-        /**
-         *
-         * @return
-         * The materialTypeFacet
-         */
-        public String getMaterialTypeFacet() {
-            return materialTypeFacet;
-        }
-
-        /**
-         *
-         * @param materialTypeFacet
-         * The material_type_facet
-         */
-        public void setMaterialTypeFacet(String materialTypeFacet) {
-            this.materialTypeFacet = materialTypeFacet;
-        }
+//        /**
+//         *
+//         * @return
+//         * The materialTypeFacet
+//         */
+//        public String getMaterialTypeFacet() {
+//            return materialTypeFacet;
+//        }
+//
+//        /**
+//         *
+//         * @param materialTypeFacet
+//         * The material_type_facet
+//         */
+//        public void setMaterialTypeFacet(String materialTypeFacet) {
+//            this.materialTypeFacet = materialTypeFacet;
+//        }
 
         /**
          *
@@ -675,77 +675,77 @@ public class BreakingNews {
             this.headline = headline;
         }
 
-        /**
-         *
-         * @return
-         * The desFacet
-         */
-        public List<String> getDesFacet() {
-            return desFacet;
-        }
+//        /**
+//         *
+//         * @return
+//         * The desFacet
+//         */
+//        public List<String> getDesFacet() {
+//            return desFacet;
+//        }
+//
+//        /**
+//         *
+//         * @param desFacet
+//         * The des_facet
+//         */
+//        public void setDesFacet(List<String> desFacet) {
+//            this.desFacet = desFacet;
+//        }
+//
+//        /**
+//         *
+//         * @return
+//         * The orgFacet
+//         */
+//        public String getOrgFacet() {
+//            return orgFacet;
+//        }
+//
+//        /**
+//         *
+//         * @param orgFacet
+//         * The org_facet
+//         */
+//        public void setOrgFacet(String orgFacet) {
+//            this.orgFacet = orgFacet;
+//        }
 
-        /**
-         *
-         * @param desFacet
-         * The des_facet
-         */
-        public void setDesFacet(List<String> desFacet) {
-            this.desFacet = desFacet;
-        }
-
-        /**
-         *
-         * @return
-         * The orgFacet
-         */
-        public String getOrgFacet() {
-            return orgFacet;
-        }
-
-        /**
-         *
-         * @param orgFacet
-         * The org_facet
-         */
-        public void setOrgFacet(String orgFacet) {
-            this.orgFacet = orgFacet;
-        }
-
-        /**
-         *
-         * @return
-         * The perFacet
-         */
-        public List<String> getPerFacet() {
-            return perFacet;
-        }
-
-        /**
-         *
-         * @param perFacet
-         * The per_facet
-         */
-        public void setPerFacet(List<String> perFacet) {
-            this.perFacet = perFacet;
-        }
-
-        /**
-         *
-         * @return
-         * The geoFacet
-         */
-        public List<String> getGeoFacet() {
-            return geoFacet;
-        }
-
-        /**
-         *
-         * @param geoFacet
-         * The geo_facet
-         */
-        public void setGeoFacet(List<String> geoFacet) {
-            this.geoFacet = geoFacet;
-        }
+//        /**
+//         *
+//         * @return
+//         * The perFacet
+//         */
+//        public List<String> getPerFacet() {
+//            return perFacet;
+//        }
+//
+//        /**
+//         *
+//         * @param perFacet
+//         * The per_facet
+//         */
+//        public void setPerFacet(List<String> perFacet) {
+//            this.perFacet = perFacet;
+//        }
+//
+//        /**
+//         *
+//         * @return
+//         * The geoFacet
+//         */
+//        public List<String> getGeoFacet() {
+//            return geoFacet;
+//        }
+//
+//        /**
+//         *
+//         * @param geoFacet
+//         * The geo_facet
+//         */
+//        public void setGeoFacet(List<String> geoFacet) {
+//            this.geoFacet = geoFacet;
+//        }
 
         /**
          *
@@ -802,6 +802,4 @@ public class BreakingNews {
         }
 
     }
-
-
 }

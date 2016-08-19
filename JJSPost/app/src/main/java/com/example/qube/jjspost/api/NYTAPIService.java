@@ -33,7 +33,7 @@ public interface NYTAPIService {
 
 //    @GET("nyt/{topics}/2.json?api-key=" + APIConstants.TOP_STORIES_API_KEY)
 //    Call<BreakingNews> getBreakingNews(@Path("topics") String topics);
-        @GET("nyt/{topics}/2.json")
+        @GET("{topics}/1/1.json?api-key=" + APIConstants.NEWSWIRE_API_KEY)
         Call<BreakingNews> getBreakingNews(@Path("topics") String topics);
 
 

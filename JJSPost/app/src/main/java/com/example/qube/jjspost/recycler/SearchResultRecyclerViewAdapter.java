@@ -2,6 +2,7 @@ package com.example.qube.jjspost.recycler;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Articl
 
         //set image
         if (!imgURL.equals("")) {
+            Log.d("iiiii", "onBindViewHolder: " + imgURL);
             Picasso.with(holder.itemView.getContext())
                     .load(imgURL)
                     .into(holder.getImgView());
