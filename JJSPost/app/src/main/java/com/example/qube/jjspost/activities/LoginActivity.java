@@ -4,9 +4,12 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -31,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.qube.jjspost.R;
+import com.example.qube.jjspost.setup.DatabaseHelper;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -51,8 +55,12 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
+    private static final String TAG = "LoginActivity";
     CallbackManager callbackManager;
+    String articleName = "articleName";
+    String articleLink = "articleLink";
+    String articleImage = "ArticleImage";
+
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -154,6 +162,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
     }
 
     @Override
@@ -222,7 +232,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
+//        String email = "xyz";
         String password = mPasswordView.getText().toString();
+
+        //Storing users Email below in Shared Preferences
+
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.qube.jjspost.activities", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("submittedEmail", email);
+        editor.putBoolean("isLoggedIn", true);
+        editor.commit();
+        DatabaseHelper helper = DatabaseHelper.getInstance(this);
+        Log.i(TAG, "attemptLogin: putting email in shared preferences: " + email);
+       // helper.addUser2(mEmailView.getText().toString());
+       // helper.addUser2(email);
+        //helper.addBookmarkedArticles("333",articleName,articleLink,articleImage);
+       // helper.addBookmarkedArticles(mEmailView.getText().toString(),"string", "string", "string");
+        Log.i(TAG, "attemptLogin: putting email in shared preferences: " + email);
+
 
         boolean cancel = false;
         View focusView = null;
@@ -252,6 +279,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            Log.i(TAG, "attemptLogin: getting email:" + email);
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -260,7 +288,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+       return email.contains("@");
+
+        //return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -402,6 +432,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -425,5 +456,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
 

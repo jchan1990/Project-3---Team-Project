@@ -15,10 +15,12 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder {
     private TextView txtTitle;
     private ImageView imgView;
 
+
     public ArticleViewHolder(View itemView) {
         super(itemView);
         txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
         imgView = (ImageView) itemView.findViewById(R.id.imageView);
+
     }
 
     public void setTitle(String title){
@@ -28,4 +30,6 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder {
     public ImageView getImgView(){
         return this.imgView;
     }
+
+
 }

@@ -1,6 +1,8 @@
 package com.example.qube.jjspost.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.qube.jjspost.fragments.ArticlesHome;
 import com.example.qube.jjspost.R;
@@ -26,6 +29,9 @@ import com.facebook.FacebookSdk;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {
     ViewPager pager;
+    String userID;
+    TextView mEmail;
+    TextView mName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.qube.jjspost.activities", Context.MODE_PRIVATE);
+        userID = sharedPreferences.getString("submittedEmail", "DEFAULT EMAIL");
+        boolean isLogin = sharedPreferences.getBoolean("isLoggedIn", false);
+        mEmail = (TextView) findViewById(R.id.textView);
+        if(isLogin){
+       //     mEmail.setText(userID);
+        }
+
+
     }
 
 
