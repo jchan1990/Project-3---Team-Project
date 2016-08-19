@@ -5,6 +5,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -42,6 +43,9 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {
     ViewPager pager;
+    String userID;
+    TextView mEmail;
+    TextView mName;
 
     private static final String TAG = "MainActivityiiii";
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
