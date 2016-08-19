@@ -194,10 +194,6 @@ public class ArticlesHome extends Fragment {
                         Log.d("iiiiiii", str);
                     }
                     try {
-//                        String title = response.body().getResults().get(0).getTitle();
-//
-//                        TextView textView = (TextView) getView().findViewById(R.id.textView);
-//                        textView.setText(title);
 
                         mAdapter = new ArticleRecyclerViewAdapter(response.body().getResults());
                         mRecyclerView.setAdapter(mAdapter);

@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     @Override
                                     public void onCompleted(JSONObject object, GraphResponse response) {
 
-
                                         Log.v("LoginActivity", response.toString());
                                         try {
                                             String userEmail = response.getJSONObject().getString("email");
