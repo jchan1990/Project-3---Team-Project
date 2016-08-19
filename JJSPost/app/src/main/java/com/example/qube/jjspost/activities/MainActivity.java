@@ -1,10 +1,15 @@
 package com.example.qube.jjspost.activities;
 
-import android.content.Context;
+import android.annotation.TargetApi;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -17,13 +22,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.qube.jjspost.api.UserData;
 import com.example.qube.jjspost.fragments.ArticlesHome;
 import com.example.qube.jjspost.R;
+import com.example.qube.jjspost.services.APICallJobService;
 import com.facebook.FacebookSdk;
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity
     TextView mEmail;
     TextView mName;
 
+    private static final String TAG = "MainActivityiiii";
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +52,10 @@ public class MainActivity extends AppCompatActivity
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        //Load fragment with data
-//        Fragment fragment = ArticlesHome.newInstance("home");
-//        replaceFragment(fragment);
-
+        PersistableBundle bundle = new PersistableBundle();
+        String topics = UserData.getInstance().getSubscriptionsAsString();
+        Log.d(TAG, "onCreate: " + topics);
+        bundle.putString("topics", topics);
 
         pager = (ViewPager) findViewById(R.id.sectionViewPager);
         pager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()));
@@ -54,7 +64,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                String q = UserData.getInstance().getSubscriptionsAsString();
+                Snackbar.make(view, q, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -68,15 +79,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("com.example.qube.jjspost.activities", Context.MODE_PRIVATE);
-        userID = sharedPreferences.getString("submittedEmail", "DEFAULT EMAIL");
-        boolean isLogin = sharedPreferences.getBoolean("isLoggedIn", false);
-        mEmail = (TextView) findViewById(R.id.textView);
-        if(isLogin){
-       //     mEmail.setText(userID);
-        }
+        //Notification
 
+        JobInfo jobNotification = new JobInfo.Builder(2,
+                new ComponentName(getPackageName(),
+                        APICallJobService.class.getName()))
+                .setExtras(bundle)
+                .setPeriodic(3_600_000)
+                .build();
 
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        if(!jobScheduler.getAllPendingJobs().contains(jobNotification))
+        jobScheduler.schedule(jobNotification);
     }
 
 
@@ -115,9 +129,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-//        Fragment fragment = null;
         Intent intent = null;
-        FragmentManager fragmentManager = getSupportFragmentManager();
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -133,6 +145,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_saved:
                 intent = new Intent(this, SavedArticlesActivity.class);
+                break;
+            case R.id.nav_subscription:
+                intent = new Intent(this, SubscriptionActivity.class);
                 break;
             case R.id.nav_login:
                 intent = new Intent(this, LoginActivity.class);
@@ -213,29 +228,9 @@ public class MainActivity extends AppCompatActivity
                 break;
 
         }
-//
-//        if (id == R.id.nav_home) {
-//            // Handle the camera action
-//            fragment = ArticlesHome.newInstance("home");
-//        } else if (id == R.id.nav_search) {
-//            intent = new Intent(this, SearchActivity.class);
-//        } else if (id == R.id.nav_bookmarks) {
-//            intent = new Intent(this, BookmarksActivity.class);
-//        } else if (id == R.id.nav_saved) {
-//            intent = new Intent(this, SavedArticlesActivity.class);
-//        } else if (id == R.id.nav_section_all) {
-//            fragment = ArticlesHome.newInstance("home");
-//        } else if (id == R.id.nav_section_opinion) {
-//            fragment = ArticlesHome.newInstance("opinion");
-//        }
-
         if (intent != null) {
             startActivity(intent);
         }
-
-//        if(fragment != null){
-//            replaceFragment(fragment);
-//        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

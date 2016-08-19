@@ -64,6 +64,7 @@ public class ArticleRecyclerViewAdapter extends RecyclerView.Adapter<ArticleView
             Picasso.with(holder.itemView.getContext())
                     .load(imgURL)
                     .into(holder.getImgView());
+            Log.d("iiiii", "onBindViewHolder: article " + imgURL);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
