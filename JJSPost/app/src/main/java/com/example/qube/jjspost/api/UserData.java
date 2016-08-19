@@ -1,5 +1,7 @@
 package com.example.qube.jjspost.api;
 
+import com.example.qube.jjspost.models.Topic;
+
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.LinkedList;
@@ -10,8 +12,8 @@ import java.util.Random;
  * Created by roosevelt on 8/18/16.
  */
 public class UserData {
-    List<String> mSubscriptions;
-    List<String> mSections;
+    List<Topic> mSubscriptions;
+    List<Topic> mSections;
     private static UserData ourInstance = new UserData();
 
     public static UserData getInstance() {
@@ -20,30 +22,30 @@ public class UserData {
 
     private UserData() {
         mSections = new LinkedList<>();
-        mSections.add("opinion");
-        mSections.add("world");
-        mSections.add("national");
-        mSections.add("politics");
-        mSections.add("upshot");
-        mSections.add("nyregion");
-        mSections.add("business");
-        mSections.add("technology");
-        mSections.add("science");
-        mSections.add("health");
-        mSections.add("sports");
-        mSections.add("arts");
-        mSections.add("books");
-        mSections.add("movies");
-        mSections.add("theater");
-        mSections.add("sundayreview");
-        mSections.add("fashion");
-        mSections.add("magazine");
-        mSections.add("food");
-        mSections.add("travel");
-        mSections.add("realestate");
-        mSections.add("automobiles");
-        mSections.add("obituaries");
-        mSections.add("insider");
+        mSections.add(new Topic("opinion", false));
+        mSections.add(new Topic("world", false));
+        mSections.add(new Topic("national", false));
+        mSections.add(new Topic("politics", false));
+        mSections.add(new Topic("upshot", false));
+        mSections.add(new Topic("nyregion", false));
+        mSections.add(new Topic("business", false));
+        mSections.add(new Topic("technology", false));
+        mSections.add(new Topic("science", false));
+        mSections.add(new Topic("health", false));
+        mSections.add(new Topic("sports", false));
+        mSections.add(new Topic("arts", false));
+        mSections.add(new Topic("books", false));
+        mSections.add(new Topic("movies", false));
+        mSections.add(new Topic("theater", false));
+        mSections.add(new Topic("sundayreview", false));
+        mSections.add(new Topic("fashion", false));
+        mSections.add(new Topic("magazine", false));
+        mSections.add(new Topic("food", false));
+        mSections.add(new Topic("travel", false));
+        mSections.add(new Topic("realestate", false));
+        mSections.add(new Topic("automobiles", false));
+        mSections.add(new Topic("obituaries", false));
+        mSections.add(new Topic("insider", false));
 
         mSubscriptions = new LinkedList<>();
         setDummySubscriptions();
@@ -53,8 +55,10 @@ public class UserData {
 
     public String getSubscriptionsAsString(){
         String forQuery = "";
-        for (String subscription : mSubscriptions) {
-            forQuery += subscription + ";";
+        if(mSubscriptions.isEmpty())
+            return "nyregion";
+        for (Topic subscription : mSubscriptions) {
+            forQuery += subscription.getTopicName() + ";";
         }
         return forQuery.substring(0,forQuery.length() - 1);
     }
@@ -62,13 +66,24 @@ public class UserData {
         Random random = new SecureRandom();
         random.setSeed((new Date()).getTime());
         int i = random.nextInt() % mSubscriptions.size();
-        return mSubscriptions.get(i);
+        return mSubscriptions.get(i).getTopicName();
     }
 
     public void setDummySubscriptions(){
-        mSubscriptions.add("sports");
-        mSubscriptions.add("movies");
-        mSubscriptions.add("politics");
+        mSubscriptions.add(new Topic("movies", true));
+        mSubscriptions.add(new Topic("politics", true));
+    }
+
+    public void setSubscriptions(LinkedList<Topic> subscribedTopics){
+        mSubscriptions.clear();
+        for (Topic subscribedTopic : subscribedTopics) {
+            if(subscribedTopic.isChecked())
+                mSubscriptions.add(subscribedTopic);
+        }
+    }
+
+    public LinkedList<Topic> getTopicsList(){
+        return (LinkedList<Topic>) mSections;
     }
 
 }

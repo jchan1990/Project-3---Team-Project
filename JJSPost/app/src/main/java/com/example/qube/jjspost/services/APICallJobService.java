@@ -1,6 +1,7 @@
 package com.example.qube.jjspost.services;
 
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.job.JobParameters;
@@ -48,101 +49,126 @@ private static final String TAG = "iiiiii";
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-//
-//            Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl(APIConstants.NEWSWIRE_BASE_URL)
-//                    .addConverterFactory(GsonConverterFactory.create())
-//                    .build();
-//
-//            //get an instance of GitHubService
-//            NYTAPIService service = retrofit.create(NYTAPIService.class);
-//
-//            //Get a Call of type User with the service and getUser method
-//            Call<BreakingNews> breakingNewsCall = service.getBreakingNews(topicString);
-//
-//            //use .enqueue to get the response.
-//            breakingNewsCall.enqueue(new Callback<BreakingNews>() {
-//                @Override
-//                public void onResponse(Call<BreakingNews> call, Response<BreakingNews> response) {
-//                    //TODO Get Notification details
-//                    Log.d(TAG, "onResponse: got here");
-//                    String imgURL = response.body().getResults()
-//                            .get(0).getMultimedia().get(3).getUrl();
-//                    String newsText = response.body().getResults()
-//                            .get(0).getAbstract();
-//
-//                    //TODO Notification!
-//                    NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(getApplicationContext());
-//                     notifBuilder.setSmallIcon(R.drawable.ic_star);
-//                     notifBuilder.setContentTitle("Breaking News");
-//                     notifBuilder.setContentText(newsText);
-//                     notifBuilder.setAutoCancel(true);
-//
-//                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//                    notificationManager.notify(1, notifBuilder.build());
-//                }
-//
-//                @Override
-//                public void onFailure(Call<BreakingNews> call, Throwable t) {
-//
-//                    Log.d("iiiiiiiiii", "should notify now failed");
-//                }
-//            });
-
-
 
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(APIConstants.TOP_STORIES_BASE_URL)
+                    .baseUrl(APIConstants.NEWSWIRE_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
             //get an instance of GitHubService
             NYTAPIService service = retrofit.create(NYTAPIService.class);
-//            NYTAPIService service = ServiceGenerator.createService(NYTAPIService.class);
 
             //Get a Call of type User with the service and getUser method
-            Call<Articles> storiesCall = service.getTopStories("home");
+//            Call<BreakingNews> breakingNewsCall = service.getBreakingNews(topicString);
+
+            Call<BreakingNews> breakingNewsCall = service.getBreakingNews(topicString);
+            Log.d(TAG, "onStartJob: " + topicString);
+            Log.d(TAG, "onStartJob: " + breakingNewsCall.request().url());
 
             //use .enqueue to get the response.
-            storiesCall.enqueue(new Callback<Articles>() {
+            breakingNewsCall.enqueue(new Callback<BreakingNews>() {
                 @Override
-                public void onResponse(Call<Articles> call, Response<Articles> response) {
-                    if (!response.isSuccessful()) {
-                        String str = response.toString();
-                        Log.d("iiiiiii", str);
-                    }
-                    try {
-                        String newsTitle = response.body().getResults().get(0).getTitle();
-                        String newsText = response.body().getResults().get(0).getAbstract();
-                        String linkUrl = response.body().getResults().get(0).getUrl();
+                public void onResponse(Call<BreakingNews> call, Response<BreakingNews> response) {
+                    //TODO Get Notification details
+                    Log.d(TAG, "onResponse: got here");
+//                    String imgURL = response.body().getResults()
+//                            .get(0).getMultimedia().get(3).getUrl();
+                    String newsText = response.body().getResults()
+                            .get(0).getAbstract();
+                    String newsDate = response.body().getResults().get(0).getPublishedDate();
+                    newsDate = newsDate.substring(0,10);
+                    String newsHeadline = response.body().getResults().get(0).getTitle();
+                    String linkUrl = response.body().getResults().get(0).getUrl();
+                    Log.d(TAG, "onResponse: " + linkUrl);
+//                    String linkUrl = "https://www.google.com";
 
-                        Intent intent = new Intent(getApplicationContext(), ArticleDetailActivity.class);
-                        intent.putExtra("URL", linkUrl);
 
-                        PendingIntent pendingIntent = PendingIntent
-                                .getActivity(getApplicationContext(), 123, intent, 0);
+                    Intent intent = new Intent(getApplicationContext(), ArticleDetailActivity.class);
+                    intent.putExtra("URL", linkUrl);
 
+                    PendingIntent pendingIntent = PendingIntent
+                            .getActivity(getApplicationContext(), 123, intent, 0);
+
+                    NotificationCompat.InboxStyle inboxStyle = new android.support.v4.app.NotificationCompat.InboxStyle();
+                    inboxStyle.setBigContentTitle("Breaking News!")
+                            .addLine(newsHeadline)
+                            .setSummaryText(newsDate);
 
                     //TODO Notification!
-                    NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(getApplicationContext());notifBuilder.setSmallIcon(R.drawable.ic_star);
-                        notifBuilder.setContentTitle(newsTitle);
-                        notifBuilder.setContentText(newsText);
-                        notifBuilder.setContentIntent(pendingIntent);
-                        notifBuilder.setAutoCancel(true);
-
+                    NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(getApplicationContext());
+                    notifBuilder.setSmallIcon(R.drawable.ic_star);
+                    notifBuilder.setContentTitle("Breaking News!");
+                    notifBuilder.setContentText(newsHeadline);
+                    notifBuilder.setContentIntent(pendingIntent);
+                    notifBuilder.setStyle(inboxStyle)
+                            .setAutoCancel(true)
+                            .setPriority(Notification.PRIORITY_MAX);
 
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.notify(1, notifBuilder.build());
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    notificationManager.notify(2, notifBuilder.build());
                 }
-                @Override
-                public void onFailure(Call<Articles> call, Throwable t) {
 
+                @Override
+                public void onFailure(Call<BreakingNews> call, Throwable t) {
+
+                    Log.d("iiiiiiiiii", "should notify now failed");
                 }
             });
+
+
+//
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl(APIConstants.TOP_STORIES_BASE_URL)
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build();
+//
+//            //get an instance of GitHubService
+//            NYTAPIService service = retrofit.create(NYTAPIService.class);
+////            NYTAPIService service = ServiceGenerator.createService(NYTAPIService.class);
+//
+//            //Get a Call of type User with the service and getUser method
+//            Call<Articles> storiesCall = service.getTopStories("home");
+//
+//            //use .enqueue to get the response.
+//            storiesCall.enqueue(new Callback<Articles>() {
+//                @Override
+//                public void onResponse(Call<Articles> call, Response<Articles> response) {
+//                    if (!response.isSuccessful()) {
+//                        String str = response.toString();
+//                        Log.d("iiiiiii", str);
+//                    }
+//                    try {
+//                        String newsTitle = response.body().getResults().get(0).getTitle();
+//                        String newsText = response.body().getResults().get(0).getAbstract();
+//                        String linkUrl = response.body().getResults().get(0).getUrl();
+//
+//                        Intent intent = new Intent(getApplicationContext(), ArticleDetailActivity.class);
+//                        intent.putExtra("URL", linkUrl);
+//
+//                        PendingIntent pendingIntent = PendingIntent
+//                                .getActivity(getApplicationContext(), 123, intent, 0);
+//
+//
+//                    //TODO Notification!
+//                    NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(getApplicationContext());notifBuilder.setSmallIcon(R.drawable.ic_star);
+//                        notifBuilder.setContentTitle(newsTitle);
+//                        notifBuilder.setContentText(newsText);
+//                        notifBuilder.setContentIntent(pendingIntent);
+//                        notifBuilder.setAutoCancel(true);
+//
+//
+//                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//                    notificationManager.notify(1, notifBuilder.build());
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                @Override
+//                public void onFailure(Call<Articles> call, Throwable t) {
+//
+//                }
+//            });
         }
 
 

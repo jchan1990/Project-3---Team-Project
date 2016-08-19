@@ -21,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ArticlesHome.OnFragmentInteractionListener {
     ViewPager pager;
 
+    private static final String TAG = "MainActivityiiii";
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +47,10 @@ public class MainActivity extends AppCompatActivity
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        //Load fragment with data
-//        Fragment fragment = ArticlesHome.newInstance("home");
-//        replaceFragment(fragment);
-
         PersistableBundle bundle = new PersistableBundle();
-//        bundle.putString("topics", UserData.getInstance().getSubscriptionsAsString());
-        bundle.putString("topics", "arts;politics");
+        String topics = UserData.getInstance().getSubscriptionsAsString();
+        Log.d(TAG, "onCreate: " + topics);
+        bundle.putString("topics", topics);
 
         pager = (ViewPager) findViewById(R.id.sectionViewPager);
         pager.setAdapter(new SectionPagerAdapter(getSupportFragmentManager()));
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        if(!jobScheduler.getAllPendingJobs().contains(jobNotification))
         jobScheduler.schedule(jobNotification);
     }
 
