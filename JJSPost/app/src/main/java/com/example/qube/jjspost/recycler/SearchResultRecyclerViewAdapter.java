@@ -41,7 +41,7 @@ public class SearchResultRecyclerViewAdapter extends RecyclerView.Adapter<Articl
         String imgURL = "";
 
         //get image url (
-        if (article.getMultimedia().size() > 0){
+        if (article.getMultimedia().size() > 3){
             imgURL = article.getMultimedia().get(0).getUrl();
         }
 
